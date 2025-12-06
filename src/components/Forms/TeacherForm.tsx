@@ -9,7 +9,7 @@ import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
 
 const TeacherForm = () => {
-	const { handleSubmit, control, formState } = useForm({
+	const { handleSubmit, control, formState, reset } = useForm({
 		resolver: zodResolver(teacherSchema),
 		defaultValues: {
 			firstName: "",
@@ -18,8 +18,10 @@ const TeacherForm = () => {
 		mode: "onSubmit",
 	});
 
-	const submitTeacherData = (fdata: TeacherSchemaType) => {
+	const submitTeacherData = async (fdata: TeacherSchemaType) => {
+		await new Promise<void>((r) => setTimeout(r, 1800));
 		console.log(fdata);
+		reset();
 	};
 
 	return (
@@ -38,6 +40,7 @@ const TeacherForm = () => {
 							type="text"
 							aria-invalid={fieldState.invalid}
 							placeholder="enter your first name"
+							autoComplete="given-name"
 						/>
 						{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 					</Field>
@@ -56,6 +59,7 @@ const TeacherForm = () => {
 							type="text"
 							aria-invalid={fieldState.invalid}
 							placeholder="enter your last name"
+							autoComplete="given-name"
 						/>
 						{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 					</Field>
