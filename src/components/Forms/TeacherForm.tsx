@@ -1,9 +1,11 @@
 "use client";
 
 import { teacherSchema, TeacherSchemaType } from "@/lib/Schema";
+import createTeacherAction from "@/server/createTeacherAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InfoIcon, Loader2Icon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Button } from "../shadcnui/button";
 import { Field, FieldError, FieldLabel } from "../shadcnui/field";
 import { Input } from "../shadcnui/input";
@@ -20,8 +22,15 @@ const TeacherForm = () => {
 
 	const submitTeacherData = async (fdata: TeacherSchemaType) => {
 		await new Promise<void>((r) => setTimeout(r, 1800));
-		console.log(fdata);
-		reset();
+
+		const { issuccess, message } = await createTeacherAction(fdata);
+
+		if (issuccess) {
+			toast.success(message);
+			reset();
+		} else {
+			toast.error(message);
+		}
 	};
 
 	return (
