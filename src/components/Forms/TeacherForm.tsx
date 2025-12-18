@@ -84,7 +84,7 @@ const TeacherForm = () => {
 								type="text"
 								aria-invalid={fieldState.invalid}
 								placeholder="enter your last name"
-								autoComplete="given-name"
+								autoComplete="family-name"
 							/>
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 						</Field>
@@ -114,11 +114,11 @@ const TeacherForm = () => {
 				{isLoading ? (
 					<>
 						<Loader2Icon className="animate-spin" />
-						Genarating......
+						Generating......
 					</>
 				) : (
 					<>
-						<Sparkles /> Genarate
+						<Sparkles /> Generate
 					</>
 				)}
 			</Button>

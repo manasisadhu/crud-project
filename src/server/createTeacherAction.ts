@@ -15,7 +15,8 @@ const createTeacherAction = async (fdata: TeacherSchemaType) => {
 			message: "Teacher data created successfully",
 		};
 	} catch (error) {
-		console.log(error);
+		console.error(error);
+
 		return {
 			issuccess: false,
 			message: "Teacher data creation failed",
