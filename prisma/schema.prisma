@@ -19,12 +19,12 @@ model Teacher {
 }
 
 model Student {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   firstName String
   lastName  String
   gender    String
-  emailId   String @unique
-
-  teacher   Teacher @relation(fields: [teacherId], references: [id])
+  emailId   String  @unique
   teacherId String
+  stuImg    String  @default("/defaultpic.png")
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
