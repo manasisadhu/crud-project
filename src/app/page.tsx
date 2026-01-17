@@ -1,3 +1,5 @@
+import DisplayCard from "@/components/DisplayCard";
+import prisma from "@/lib/database/dbClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,15 +7,29 @@ export const metadata: Metadata = {
 	description: "Production grade Fullstack Next.js starter template",
 };
 
-const page = () => {
+const page = async () => {
+	const studentData = await prisma.student.findMany({
+		include: {
+			teacher: {
+				select: {
+					firstName: true,
+					lastName: true,
+				},
+			},
+		},
+		omit: {
+			teacherId: true,
+		},
+	});
+	console.log(studentData);
 	return (
-		<section className="grid h-[90dvh] place-items-center">
-			<div className="space-y-2 text-center">
-				<h1 className="text-5xl font-semibold">Next.js Starter Fullstack</h1>
-				<h2 className="text-3xl">
-					Production grade Fullstack Next.js starter template
-				</h2>
-			</div>
+		<section className="grid h-[90dvh] grid-cols-1 place-items-center gap-6 pt-20 md:grid-cols-2">
+			{studentData.map((item) => (
+				<DisplayCard
+					key={item.id}
+					studentInfo={item}
+				/>
+			))}
 		</section>
 	);
 };
